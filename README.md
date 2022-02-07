@@ -6,11 +6,13 @@ Tired of those meal plans that have strict conditions on what to eat, those that
 
 Meal Planner is an application used to select recipes based on whatever criteria you wish and then add that recipe to your meal plan. It's useful for those who want to organize their day and easily follow a plan of their own, or those that just want to search up some recipes to get some ideas. Meal Planner is here to help you search up recipes based off of a variety of parameters. Want to search up a recipe using zuccini? Meal Planner has a recipe for it. Want to search a recipe with a certain amount of calories or macros? Meal Planner can do it. Do you not like meat, or are allergic to certain things? Meal Planner can exclude that. You want to just look up random recipes and see what shows up? MEAL PLANNER CAN DO IT! 
 
-Meal Planner is built in Django and Vue. It uses the Spoonacular API to give the user recipes to choose from.
+Meal Planner is built in Django and Vue. It uses the Spoonacular API and the CSS Bulma framework to give the user recipes to choose from.
 
 ## Features
 
-> A **user** can **generate a daily or weekly meal plan** with the ability to **specify caloric intake for each day or dietary restrictions**.
+> A **user** can **generate a daily or weekly meal plan** with the ability to **specify caloric intake for each day**.
+> A **user** can **search recipes with exclusions**, such as being allergic to shellfish or peanuts.
+> A **user** will be able to **search random recipes** for inspiration! 
 
 ### Tasks
 
@@ -41,6 +43,7 @@ Create/Edit Meal Plan
   - Create django project
   - Create models
   - Learn Spoonacular API
+  - Find a CSS framework
  
 ### Week 2
   - Generate a meal plan
