@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,9 +8,73 @@
     <title>Meal Planner</title>
 
     <script src="https://unpkg.com/vue@next"></script>
-	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 </head>
+
 <body>
-    
+    <div id="app">
+        <div class="columns">
+            <div class="columns is-half">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-left">
+                                <p class="image is-256x256">
+                                    <img :src="randomRecipePhoto">
+                                </p>
+                            </div>
+                            <div class="media-content">
+                                <p class="title is-4">[[ randomRecipeTitle ]]</p>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <div v-html="randomRecipeSummary"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const App = {
+            delimiters: ['[[', ']]'],
+            data() {
+                return {
+                    randomRecipeInstructions: '',
+                    randomRecipePhoto: '',
+                    randomRecipeTitle: '',
+                    randomRecipeSummary: '',
+                }
+            },
+
+            created() {
+                this.getRandomRecipe()
+            },
+
+            methods: {
+                getRandomRecipe() {
+                    axios({
+                        method: 'get',
+                        url: 'https://api.spoonacular.com/recipes/random',
+                        headers: { Accept: 'application/json' },
+                        params: { apiKey: 'c0706aec64ba455eb06753d6e855a6e5' }
+                    })
+                        .then(response => {
+                            console.log(response.data.recipes)
+                            this.randomRecipeInstructions = response.data.recipes[0].instructions
+                            this.randomRecipePhoto = response.data.recipes[0].image
+                            this.randomRecipeTitle = response.data.recipes[0].title
+                            this.randomRecipeSummary = response.data.recipes[0].summary
+                        })
+                }
+            }
+
+        }
+
+        Vue.createApp(App).mount('#app')
+    </script>
 </body>
+
 </html>
