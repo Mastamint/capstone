@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'MeanPlanner.apps.MeanplannerConfig',
+    'MealPlanner.apps.MealplannerConfig',
+    'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
@@ -81,7 +82,6 @@ DATABASES = {
     }
 }
 
-AUTH_USER_MODEL = { 'MealPlanner.MyUser' }
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
