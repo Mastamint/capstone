@@ -1,5 +1,4 @@
 from django.db import models
-from jsonfield import JSONField
 from django.contrib.auth.models import User
 from users.models import MyUser
 
