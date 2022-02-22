@@ -27,6 +27,9 @@
                 <h2 @click="getRecipeDetails(recipe)">
                     [[ recipe.title ]]
                 </h2>
+                <a href="{% url 'MealPlanner:get-recipes/' %}">
+                    <button>Save</button>
+                </a>
             </div>
         </article>
         <p id="test" v-if="showRecipeDetails" v-html="showRecipeDetails"></p>

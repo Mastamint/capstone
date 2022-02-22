@@ -12,7 +12,7 @@ def index(request):
 def random(request):
     return render(request, 'MealPlanner/randomRecipe.html')
 
-def get_todos(request):
+def get_recipes(request):
     data = {'info': []}
     fav_recipes = Recipe.objects.all()
     for recipe in fav_recipes:
@@ -24,10 +24,8 @@ def get_todos(request):
     print(data)
     return JsonResponse(data)
 
-def add_new_todo(request):
-    data = json.loads(request.body) # request.body is the data property of the axios call
-    # it comes in as a string, so json.loads take in that string and returns a python dictionary
-    # print(data) # {'text': 'test'}
+def add_new_recipe(request):
+    data = json.loads(request.body) 
     new_id = data.get('id')
     Recipe.objects.create(recipe_id=new_id)
     return JsonResponse({'message': 'OK'})
