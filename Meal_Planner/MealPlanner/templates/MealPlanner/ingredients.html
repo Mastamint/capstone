@@ -22,17 +22,17 @@
             <input type="submit" value="Submit">
         </form>
         <hr />
+        <p id="test" v-if="showRecipeDetails" v-html="showRecipeDetails"></p>
         <article v-for="recipe in userRecipes">
             <div>
                 <h2 @click="getRecipeDetails(recipe)">
                     [[ recipe.title ]]
+                    <a @click='saveRecipe(recipe)'>
+                        <button>Save</button>
+                    </a>
                 </h2>
-                <a href="{% url 'MealPlanner:get-recipes/' %}">
-                    <button>Save</button>
-                </a>
             </div>
         </article>
-        <p id="test" v-if="showRecipeDetails" v-html="showRecipeDetails"></p>
     </div>
 
     <script>
@@ -43,11 +43,11 @@
                     userIngredient: '',
                     userRecipes: [],
                     spotlightInstructions: {},
-                    showRecipeDetails: ''
+                    showRecipeDetails: '',
                 }
             },
 
-                 mounted() {
+                mounted() {
                 this.csrf_token = document.querySelector('input[name="csrfmiddlewaretoken"]').value
             },
 
@@ -58,7 +58,7 @@
                         method: 'get',
                         url: 'https://api.spoonacular.com/recipes/findByIngredients',
                         headers: { Accept: 'application/json' },
-                        params: { apiKey: 'c0706aec64ba455eb06753d6e855a6e5', ingredients: this.userIngredient, number: 50 }
+                        params: { apiKey: 'c0706aec64ba455eb06753d6e855a6e5', ingredients: this.userIngredient, number: 20 }
                     })
                         .then(response => {
                             // console.log(response.data)
@@ -75,9 +75,22 @@
                         params: { apiKey: 'c0706aec64ba455eb06753d6e855a6e5' }
                     })
                         .then(response => {
-                            console.log(response.data)
+                            // console.log(response.data)
                             this.showRecipeDetails = response.data.instructions
                         })
+                },
+
+                saveRecipe(recipe) {
+                    // console.log(id, "id")
+                    axios ({
+                        method: 'post',
+                        url: '/new/',
+                        headers: { 'X-CSRFToken': this.csrf_token },
+                        data: {  }
+                    })
+                    .then(response => {
+                        console.log(recipe)
+                    })
                 }
             }
         }
