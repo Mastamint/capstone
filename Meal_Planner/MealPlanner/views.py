@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 import json
 
@@ -54,6 +54,10 @@ def add_new_recipe(request):
     new_name = recipe_data.get('title')
     Recipe.objects.create(recipe_id=new_id, recipe_name=new_name, user=request.user, recipe_info=recipe_data)
     return JsonResponse({'message': 'OK'})
+
+def delete_recipe(request, id):
+    Recipe.objects.filter(id=id).delete()
+    return redirect('MealPlanner:profile')
 
 # Have to create a view/button to save the ID of the recipe to a list
 # Then have to call the list later and loop over it in a user profile
