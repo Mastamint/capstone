@@ -15,6 +15,24 @@ def search(request):
 def random(request):
     return render(request, 'MealPlanner/randomRecipe.html')
 
+def profile_page(request):
+    if request.user.is_authenticated:
+        recipes = request.user.favorite_recipes.all()
+        context = {'recipes' : recipes,}
+        return render(request, 'MealPlanner/profile_page.html', context)
+
+    return render(request, 'MealPlanner/profile_page.html')
+
+def recipe_details(request, id):
+    if request.user.is_authenticated:
+        recipes = request.user.favorite_recipes.all()
+        selected_recipe = get_object_or_404(Recipe, id=id, user=request.user)
+        context = {
+            'recipes' : recipes,
+            'selected_recipe' : selected_recipe}
+        return render(request, 'MealPlanner/profile_page.html', context)
+
+
 def get_recipes(request, id):
     # if request.user.is_authenticated(): ... do stuff you would do if they were logged in
     # request.user will give you the user
@@ -26,12 +44,10 @@ def get_recipes(request, id):
             'name': recipe.recipe_name
         }
         data['info'].append(recipe_dict)
-    print(data)
     return JsonResponse(data)
 
 def add_new_recipe(request):
     data = json.loads(request.body) 
-    print(data)
     recipe_data = data.get('recipe')
     # print(recipe_data)
     new_id = recipe_data.get('id')

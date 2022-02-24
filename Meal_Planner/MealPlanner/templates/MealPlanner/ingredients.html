@@ -5,45 +5,59 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
+    <title>Meal Planner: Search</title>
 
     <script src="https://unpkg.com/vue@next"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    {% comment %} <script src="https://cdn.tailwindcss.com"></script> {% endcomment %}
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-
-<body>
+<body class="bg-stone-200">
+    <header class="bg-indigo-200 border-2 border-indigo-200">
+        <h1 class="text-4xl font-bold py-2 text-center">Welcome to the Meal Planner</h1>
+        <h3 class="text-2xl font-semibold pb-3 text-center">A Meal Plan By You, FOR You!</h3>
+        <nav class="flex lg:justify-evenly space-x-4 text-center mb-2">
+            <a href='/' class="rounded-lg py-2 px-4 text-slate-700 font-medium border-4 bg-indigo-300 hover:bg-fuchsia-300">Home</a>
+            <a href='/search/' class="rounded-lg py-2 px-4 text-slate-700 font-medium border-4 bg-indigo-300 hover:bg-fuchsia-300">Search</a>
+            <a href='/profile/' class="rounded-lg py-2 px-4 text-slate-700 font-medium border-4 bg-indigo-300 hover:bg-fuchsia-300">Profile</a>
+            <a href='/users/login/' class="rounded-lg py-2 px-4 text-slate-700 font-medium border-4 bg-indigo-300 hover:bg-fuchsia-300">Log In</a>
+        </nav>
+    </header>
     <div id="app">
         <form @submit.prevent="getRecipeByIngredient">
             {% csrf_token %}
-            <label for="text">Search by Ingredients:</label>
-            <input v-model="userIngredient" type="text" id="text" />
-            <input type="submit" value="Submit">
+            <label for="text" class="ml-2 mt-3 pl-3 font-semibold">Search by Ingredients:</label>
+            <input v-model="userIngredient" type="text" id="text" class="border-2 border-slate-900 pl-2 mt-3 ml-2"/>
+            <input type="submit" value="Submit" class="ml-2 px-2 mt-3 cursor-pointer border-2 border-indigo-400 rounded-lg bg-indigo-300 hover:bg-fuchsia-300">
         </form>
         <hr />
-        <ol v-if="showRecipeDetails">Ingredients:
-            <li v-for="ingredient in recipeIngredients">[[ ingredient.original ]]</li>
-        </ol>
-        <p id="test" v-if="showRecipeDetails" v-html="showRecipeDetails"></p>
-        <article v-for="recipe in userRecipes">
-            <div>
-                <h2>
-                    [[ recipe.title ]]
-                    <a @click="getRecipeDetails(recipe)">
-                        <button>View Instructions</button>
-                    </a>
-                    <a @click='saveRecipe(recipe)'>
-                        <button>Save</button>
-                    </a>
-                </h2>
+        <div class="flex flex-row-reverse">
+            <div class="w-1/2">
+                <img v-if="showRecipeDetails" :src="[[ recipePhoto ]]">
+                <ol v-if="showRecipeDetails" class="border-2 boder-indigo-400 font-semibold text-xl">Ingredients:
+                    <li v-for="ingredient in recipeIngredients" class="ml-4 font-normal text-base">[[ ingredient.original ]]</li>
+                </ol>
+                <p v-if="showRecipeDetails" class="font-semibold text-xl">Instructions:</p>
+                <p id="test" v-if="showRecipeDetails" v-html="showRecipeDetails" class="mx-2 px-2"></p>
             </div>
-        </article>
-    </div>
-
-    <a href="{% url 'MealPlanner:index' %}"><button>Home</button></a>
-
-
-    <script>
+            <div class="w-1/2">
+                <article v-for="recipe in userRecipes">
+                    <span>
+                        <p class="m-2 px-3 text-2xl font-semibold">
+                            [[ recipe.title ]]
+                            <a @click="getRecipeDetails(recipe)">
+                                <button class="ml-2 mt-3 font-normal text-base cursor-pointer border-2 border-indigo-400 rounded-lg bg-indigo-300 hover:bg-fuchsia-300">Details</button>
+                            </a>
+                            <a @click='saveRecipe(recipe)'>
+                                <button class="ml-2 mt-3 font-normal text-base cursor-pointer border-2 border-indigo-400 rounded-lg bg-indigo-300 hover:bg-fuchsia-300">Save</button>
+                            </a>
+                        </p>
+                    </span>
+                </article>
+            </div>
+        </div>
+        </div>
+        
+        <script>
         const App = {
             delimiters: ['[[', ']]'],
             data() {
@@ -53,7 +67,8 @@
                     spotlightInstructions: {},
                     showRecipeDetails: '',
                     fullRecipeInfo: '',
-                    recipeIngredients: []
+                    recipeIngredients: [],
+                    recipePhoto: ''
                 }
             },
 
@@ -85,9 +100,10 @@
                         params: { apiKey: 'c0706aec64ba455eb06753d6e855a6e5' }
                     })
                         .then(response => {
-                            console.log(response.data.extendedIngredients)
                             this.showRecipeDetails = response.data.instructions
                             this.recipeIngredients = response.data.extendedIngredients
+                            this.recipePhoto = response.data.image
+                            console.log(this.recipePhoto)
                         })
                 },
 

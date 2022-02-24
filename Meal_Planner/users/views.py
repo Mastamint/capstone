@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from django.contrib.auth import logout, login, authenticate
+from .models import MyUser
 
 
 def username_exists(username):
-    return User.objects.filter(username=username).exists()
+    return MyUser.objects.filter(username=username).exists()
 
 def login_view(request):
     message = ''
@@ -41,7 +42,7 @@ def register_view(request):
             context = {'message': message}
             return render(request, 'users/register.html', context)
 
-        user = User.objects.create_user(username=username, password=password1)
+        user = MyUser.objects.create_user(username=username, password=password1)
         login(request, user)
         return redirect('/')
         
