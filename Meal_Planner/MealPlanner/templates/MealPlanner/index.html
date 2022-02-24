@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meal Planner: Home</title>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-stone-200">
@@ -16,6 +18,7 @@
             {% if user.is_authenticated %}
             <a href='/search/' class="rounded-lg py-2 px-4 text-slate-700 font-medium border-4 bg-indigo-300 hover:bg-fuchsia-300">Search</a>
             <a href='/profile/' class="rounded-lg py-2 px-4 text-slate-700 font-medium border-4 bg-indigo-300 hover:bg-fuchsia-300">Profile</a>
+            <a href='/random/' class="rounded-lg py-2 px-4 text-slate-700 font-medium border-4 bg-indigo-300 hover:bg-fuchsia-300">Random</a>
             <a href='/users/logout/' class="rounded-lg py-2 px-4 text-slate-700 font-medium border-4 bg-indigo-300 hover:bg-fuchsia-300">Log Out</a>
             {% else %}
             <a href='/users/login/' class="rounded-lg py-2 px-4 text-slate-700 font-medium border-4 bg-indigo-300 hover:bg-fuchsia-300">Log In</a>
@@ -23,6 +26,75 @@
         </nav>
     </header>
     <h1 class="p-2 text-4xl font-semibold text-center">-- Getting Started --</h1>
-    <p class="p-3 text-center">Meal Planner was created for those who wish to create their own plans, are tired of making the same old thing and want new ideas, and for those that want to hold themselves accountable to what they create. To get started, first you must create your account. You can do that by clicking <a href="/users/register/" class="underline underline-offset-1 text-red-700">here</a> or clicking the "Log In" button at the top. </p>
+    <p class="p-3">Meal Planner was created for those who wish to create their own plans, are tired of making the same old thing and want new ideas, or for those that want to hold themselves accountable to what they create. To get started, first you must create your account. You can do that by clicking <a href="/users/register/" class="underline underline-offset-1 text-red-700">here</a> or clicking the "Log In" button at the top. Once you've created your account, you will have access to our Search function. This allows users to search a variety of different recipes using whatever ingredients they want or have available. The Meal Planner is not limited to one-ingredient searches at a time, you can search however many you want at once, such as mushrooms, rice, chicken, carrots, etc... The only limit to the search is what you have in your pantry!</p>
+
+    <h1 class="p-2 text-4xl font-semibold text-center">-- After Registering --</h1>
+    <p class="p-3">When you use the Search function, you will recieve a list back that gives you the options to view details and save. The "Details" button will pop up a side view with a photo, the ingredients, and directions on how to make it. If you like it, you can choose to "Save" it, which will then add it to your "Profile" tab that you can look at whenever you want. In your "Profile" tab, you will see a list of the recipes you have saved and the options to view the "Details" or to "Delete". The Details button will take you to a new page that contains all the information about the recipe you need. The required ingredients, a quick description, and the directions. If you decide that you don't like the recipe anymore, then simply go back to your Profile page and delete it!</p>
+
+    <h1 class="p-2 text-4xl font-semibold text-center">-- Thank You For Visiting! --</h1>
+
+    {% if user.is_authenticated %}
+
+    <h1 class="p-2 text-4xl font-semibold text-center">-- An Example of A Recipe --</h1>
+    <p class="p-3 text-center">The following is a randomly selected recipe for you to see as an example. You can only see this if you are logged in, so thank you for using my site! There is also the "Random" tab at the top, which does the same function.</p>
+    <div id="app">
+
+        <h2 class="p-2 text-3xl font-bold">[[ randomRecipeTitle ]]</h2>
+        
+        <img :src="randomRecipePhoto" class="p-4">
+
+        <div v-html="randomRecipeSummary" class="mx-4"></div>
+
+        <ol>
+            <h3 class="p-2 text-2xl font-semibold">Ingredients:</h3>
+            <li v-for="ingredient in randomRecipeIngredients" class="px-4 py-2">[[ ingredient.original ]]</li>
+        </ol>
+        <hr/>
+        <h3 class="p-2 text-2xl font-semibold">Instructions:</h3>
+        <div class="p-4" v-html="randomRecipeInstructions"></div>
+    </div>
+
+    <script>
+        const App = {
+            delimiters: ['[[', ']]'],
+            data() {
+                return {
+                    randomRecipeInstructions: '',
+                    randomRecipePhoto: '',
+                    randomRecipeTitle: '',
+                    randomRecipeSummary: '',
+                    randomRecipeIngredients: [],
+                }
+            },
+
+            created() {
+                this.getRandomRecipe()
+            },
+
+            methods: {
+                getRandomRecipe() {
+                    axios({
+                        method: 'get',
+                        url: 'https://api.spoonacular.com/recipes/random',
+                        headers: { Accept: 'application/json' },
+                        params: { apiKey: 'c0706aec64ba455eb06753d6e855a6e5' }
+                    })
+                        .then(response => {
+                            console.log(response.data.recipes)
+                            this.randomRecipeInstructions = response.data.recipes[0].instructions
+                            this.randomRecipePhoto = response.data.recipes[0].image
+                            this.randomRecipeTitle = response.data.recipes[0].title
+                            this.randomRecipeSummary = response.data.recipes[0].summary
+                            this.randomRecipeIngredients = response.data.recipes[0].extendedIngredients
+                        })
+                }
+            }
+
+        }
+
+        Vue.createApp(App).mount('#app')
+    </script>
+    {% endif %}
+
 </body>
 </html>

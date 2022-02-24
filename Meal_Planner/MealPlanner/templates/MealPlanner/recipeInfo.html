@@ -9,7 +9,7 @@
 </head>
 <body class="bg-stone-200">
     <header class="bg-indigo-200 border-2 border-indigo-200">
-        <h1 class="text-4xl font-bold py-2 text-center">Welcome to the Meal Planner</h1>
+        <h1 class="text-4xl font-bold py-2 text-center">The Meal Planner</h1>
         <h3 class="text-2xl font-semibold pb-3 text-center">A Meal Plan By You, FOR You!</h3>
         <nav class="flex lg:justify-evenly space-x-4 text-center mb-2">
             <a href='/' class="rounded-lg py-2 px-4 text-slate-700 font-medium border-4 bg-indigo-300 hover:bg-fuchsia-300">Home</a>
@@ -22,5 +22,30 @@
             {% endif %}
         </nav>
     </header>
+    {% if user.is_authenticated %}
+    <div class="ml-3">
+        <img class="ml-4 mb-2" src="{{ selected_recipe.recipe_info.image }}">
+        <div class="text-xl font-bold">{{ selected_recipe.recipe_info.title }}</div>
+        <div class="mx-3">{{ selected_recipe.recipe_info.summary | safe }}</div>
+        {% if selected_recipe.recipe_info.extendedIngredients != None %}
+        <ol class="text-xl font-semibold">Ingredients:
+            {% for ingredient in selected_recipe.recipe_info.extendedIngredients %}
+            <li class="text-base font-normal px-3">{{ ingredient.original }}</li>
+            {% endfor %}
+        </ol>
+        <div class="text-xl font-semibold">Instructions:</div>
+        {% endif %}
+        <div class="text-base font-normal px-3">{{ selected_recipe.recipe_info.instructions | safe }}</div>
+    </div>
+    </div>
+    <a href="{% url 'MealPlanner:profile' %}">
+        <button class="ml-4 mt-3 px-2 font-normal text-base cursor-pointer border-2 border-indigo-400 rounded-lg bg-indigo-300 hover:bg-fuchsia-300">
+            Return
+        </button>
+    </a>
+    {% else %}
+    <p class="p-4 font-semibold">You must be logged in to view this. Please follow <a href="/users/login/" class="underline underline-offset-1 text-red-700">this link</a> to log in.</p>
+    {% endif %}
+
 </body>
 </html>
