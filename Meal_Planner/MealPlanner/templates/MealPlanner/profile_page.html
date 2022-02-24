@@ -16,6 +16,7 @@
             {% if user.is_authenticated %}
             <a href='/search/' class="rounded-lg py-2 px-4 text-slate-700 font-medium border-4 bg-indigo-300 hover:bg-fuchsia-300">Search</a>
             <a href='/profile/' class="rounded-lg py-2 px-4 text-slate-700 font-medium border-4 bg-indigo-300 hover:bg-fuchsia-300">Profile</a>
+            <a href='/random/' class="rounded-lg py-2 px-4 text-slate-700 font-medium border-4 bg-indigo-300 hover:bg-fuchsia-300">Random</a>
             <a href='/users/logout/' class="rounded-lg py-2 px-4 text-slate-700 font-medium border-4 bg-indigo-300 hover:bg-fuchsia-300">Log Out</a>
             {% else %}
             <a href='/users/login/' class="rounded-lg py-2 px-4 text-slate-700 font-medium border-4 bg-indigo-300 hover:bg-fuchsia-300">Log In</a>
@@ -25,7 +26,7 @@
     {% if user.is_authenticated %}
     <h1 class="text-3xl font-semibold p-3">Welcome {{ user | title }} </h1>
     <div class="flex flex-wrap flex-row">
-        <div class="w-2/5">
+        <div>
             {% for recipe in recipes %}
             <div class="font-semibold text-xl py-3 px-6">
                 {{ recipe.recipe_info.title }}
@@ -41,20 +42,6 @@
                 </a>
             </div>
             {% endfor %}
-        </div>
-        <div class="w-3/5">
-            <img src="{{ selected_recipe.recipe_info.image }}">
-            <div class="text-xl font-bold">{{ selected_recipe.recipe_info.title }}</div>
-            <div class="mx-3">{{ selected_recipe.recipe_info.summary | safe }}</div>
-            {% if selected_recipe.recipe_info.extendedIngredients != None %}
-            <ol class="text-xl font-semibold">Ingredients:
-                {% for ingredient in selected_recipe.recipe_info.extendedIngredients %}
-                <li class="text-base font-normal px-3">{{ ingredient.original }}</li>
-                {% endfor %}
-            </ol>
-            <div class="text-xl font-semibold">Instructions:</div>
-            {% endif %}
-            <div class="text-base font-normal px-3">{{ selected_recipe.recipe_info.instructions | safe }}</div>
         </div>
     </div>
     {% else %}

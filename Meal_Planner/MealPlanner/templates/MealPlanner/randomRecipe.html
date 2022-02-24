@@ -24,19 +24,19 @@
     </header>
     <div id="app">
 
-        <h2>[[ randomRecipeTitle ]]</h2>
+        <h2 class="p-2 text-3xl font-bold">[[ randomRecipeTitle ]]</h2>
         
-        <img :src="randomRecipePhoto">
+        <img :src="randomRecipePhoto" class="p-4">
 
-        <div v-html="randomRecipeSummary"></div>
+        <div v-html="randomRecipeSummary" class="mx-4"></div>
 
         <ol>
-            <h3>Ingredients:</h3>
-            <li v-for="ingredient in randomRecipeIngredients">[[ ingredient.original ]]</li>
+            <h3 class="p-2 text-2xl font-semibold">Ingredients:</h3>
+            <li v-for="ingredient in randomRecipeIngredients" class="px-4 py-2">[[ ingredient.original ]]</li>
         </ol>
         <hr/>
-        <h3>Instructions:</h3>
-        <div v-html="randomRecipeInstructions"></div>
+        <h3 class="p-2 text-2xl font-semibold">Instructions:</h3>
+        <div class="p-4" v-html="randomRecipeInstructions"></div>
     </div>
 
     <script>
