@@ -9,8 +9,7 @@
 
     <script src="https://unpkg.com/vue@next"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
-
+    {% comment %} <script src="https://cdn.tailwindcss.com"></script> {% endcomment %}
 </head>
 
 <body>
@@ -22,11 +21,17 @@
             <input type="submit" value="Submit">
         </form>
         <hr />
+        <ol v-if="showRecipeDetails">Ingredients:
+            <li v-for="ingredient in recipeIngredients">[[ ingredient.original ]]</li>
+        </ol>
         <p id="test" v-if="showRecipeDetails" v-html="showRecipeDetails"></p>
         <article v-for="recipe in userRecipes">
             <div>
-                <h2 @click="getRecipeDetails(recipe)">
+                <h2>
                     [[ recipe.title ]]
+                    <a @click="getRecipeDetails(recipe)">
+                        <button>View Instructions</button>
+                    </a>
                     <a @click='saveRecipe(recipe)'>
                         <button>Save</button>
                     </a>
@@ -34,6 +39,9 @@
             </div>
         </article>
     </div>
+
+    <a href="{% url 'MealPlanner:index' %}"><button>Home</button></a>
+
 
     <script>
         const App = {
@@ -44,6 +52,8 @@
                     userRecipes: [],
                     spotlightInstructions: {},
                     showRecipeDetails: '',
+                    fullRecipeInfo: '',
+                    recipeIngredients: []
                 }
             },
 
@@ -58,7 +68,7 @@
                         method: 'get',
                         url: 'https://api.spoonacular.com/recipes/findByIngredients',
                         headers: { Accept: 'application/json' },
-                        params: { apiKey: 'c0706aec64ba455eb06753d6e855a6e5', ingredients: this.userIngredient, number: 20 }
+                        params: { apiKey: 'c0706aec64ba455eb06753d6e855a6e5', ingredients: this.userIngredient, number: 10 }
                     })
                         .then(response => {
                             // console.log(response.data)
@@ -75,23 +85,36 @@
                         params: { apiKey: 'c0706aec64ba455eb06753d6e855a6e5' }
                     })
                         .then(response => {
-                            // console.log(response.data)
+                            console.log(response.data.extendedIngredients)
                             this.showRecipeDetails = response.data.instructions
+                            this.recipeIngredients = response.data.extendedIngredients
                         })
                 },
 
                 saveRecipe(recipe) {
-                    // console.log(id, "id")
-                    axios ({
-                        method: 'post',
-                        url: '/new/',
-                        headers: { 'X-CSRFToken': this.csrf_token },
-                        data: {  }
+                    id = recipe.id
+                    axios({
+                        method: 'get',
+                        url: `https://api.spoonacular.com/recipes/${id}/information`,
+                        headers: { Accept: 'application/json' },
+                        params: { apiKey: 'c0706aec64ba455eb06753d6e855a6e5' }
                     })
-                    .then(response => {
-                        console.log(recipe)
-                    })
-                }
+                        .then(response => {
+                            // console.log(response.data)
+                            this.showRecipeDetails = response.data.instructions
+                            this.fullRecipeInfo = response.data
+                            axios ({
+                                method: 'post',
+                                url: '/new/',
+                                headers: { 'X-CSRFToken': this.csrf_token },
+                                data: { 'recipe' : this.fullRecipeInfo }
+                            })
+                            .then(response => {
+                                // this.getRecipeDetails(recipe)
+                                console.log(response)
+                            })
+                        })
+                    },
             }
         }
         Vue.createApp(App).mount('#app')

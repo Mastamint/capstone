@@ -7,6 +7,9 @@ from .models import Recipe
 
 # Create your views here.
 def index(request):
+    return render(request, 'MealPlanner/index.html')
+
+def search(request):
     return render(request, 'MealPlanner/ingredients.html')
 
 def random(request):
