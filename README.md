@@ -12,7 +12,7 @@ Meal Planner is built in Django and Vue. It uses the Spoonacular API and the Tai
 
 Here is an example of the Meal Planner
 
-![Meal Planner](This PC/Downloads/Meal_Planner.png)
+![Meal Planner](/This PC/Downloads/Meal_Planner.png)
 
 ## Features
 
