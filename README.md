@@ -4,9 +4,15 @@
 
 Tired of those meal plans that have strict conditions on what to eat, those that have weird foods in them that are too expensive for you, or you just want a recipe based off some leftovers you have in the fridge? Look no further! Meal Planner is what you need!
 
-Meal Planner is an application used to select recipes based on whatever criteria you wish and then add that recipe to your meal plan. It's useful for those who want to organize their day and easily follow a plan of their own, or those that just want to search up some recipes to get some ideas. Meal Planner is here to help you search up recipes based off of a variety of parameters. Want to search up a recipe using zuccini? Meal Planner has a recipe for it. Want to search a recipe with a certain amount of calories or macros? Meal Planner can do it. Do you not like meat, or are allergic to certain things? Meal Planner can exclude that. You want to just look up random recipes and see what shows up? MEAL PLANNER CAN DO IT! 
+Meal Planner is an application used to select recipes based on whatever criteria you wish and then add that recipe to your meal plan. It's useful for those who want to organize their day and easily follow a plan of their own, or those that just want to search up some recipes to get some ideas. Meal Planner is here to help you search up recipes based off of a variety of parameters. Want to search up a recipe using zuccini? You want to just look up random recipes and see what shows up? Meal Planner is for you
 
-Meal Planner is built in Django and Vue. It uses the Spoonacular API and the CSS Bulma framework to give the user recipes to choose from.
+Meal Planner is built in Django and Vue. It uses the Spoonacular API and the Tailwind CSS framework to give the user recipes to choose from.
+
+## The Meal Planner can be found [here](https://tardi-meal-planner.herokuapp.com/)
+
+Here is an example of the Meal Planner
+
+![Meal Planner](This PC/Downloads/Meal_Planner.png)
 
 ## Features
 
@@ -25,16 +31,10 @@ Meal Planner is built in Django and Vue. It uses the Spoonacular API and the CSS
 
 ```
 User: (username)
-  Meal Plan for the day: (List of recipes with the ability to select each recipe and get the in-depth information such as ingredients needed, baking instructions, etc.)
-  Total Calories: (int)
-  Macros: (Total macros for the day)  
-  Meal Plan for tomorrow: (List of recipes, or function to create one if blank)
-  
-Create/Edit Meal Plan
-  Remove certain recipes and replace them with others
-  Search similar recipes
-  Search substitutions for ingredients
-  Create new meal plan for the following day/week
+ -Welcome message
+ -Ability to look up all the information regarding that recipe or delete it.
+ -Every user has their own profile page, listing the recipes they saved.
+ -Search the API based off of ingredients the user gives it. xample: mushroom, rice, chicken, pasta all at once)
 ```
 
 ## Schedule
