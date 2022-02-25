@@ -8,6 +8,8 @@ The Meal Planner is designed as a graduation project for the PDX Code Guild Full
 
 ![Meal Planner Recipe Information](/Pictures/RecipeInfo.jpg)
 
+![Meal Planner Serach Results](/Pictures/Search.JPG)
+
 ## How to Run Meal Planner Locally
 
 You must first activate a virtual environment, or pip install globally, depending on your preference. 
