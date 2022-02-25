@@ -8,12 +8,6 @@ Meal Planner is an application used to select recipes based on whatever criteria
 
 Meal Planner is built in Django and Vue. It uses the Spoonacular API and the Tailwind CSS framework to give the user recipes to choose from.
 
-## The Meal Planner can be found [here](https://tardi-meal-planner.herokuapp.com/)
-
-Here is an example of the Meal Planner
-
-![Meal Planner](/This PC/Downloads/Meal_Planner.png)
-
 ## Features
 
 > A **user** can **generate a daily or weekly meal plan** with the ability to **specify caloric intake for each day**.
