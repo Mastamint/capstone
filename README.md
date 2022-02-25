@@ -6,7 +6,7 @@ The Meal Planner is designed as a graduation project for the PDX Code Guild Full
 
 ### Check out The Meal Planner [here](https://tardi-meal-planner.herokuapp.com/)
 
-![Meal Planner Recipe Information](RecipeInfo.jpg)
+![Meal Planner Recipe Information](RecipeInfo.JPG)
 
 ![Meal Planner Serach Results](Search.JPG)
 
