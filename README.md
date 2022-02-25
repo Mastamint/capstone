@@ -22,3 +22,5 @@ $ py manage.py runserver
 ```
 
 Then either click on the "Log In" button at the top to create your account, or follow the "Getting Started" information on the home page and enjoy!
+
+You can contact me by email at alnardo.barisic@gmail.com
