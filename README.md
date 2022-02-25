@@ -15,7 +15,7 @@ The Meal Planner is designed as a graduation project for the PDX Code Guild Full
 You must first activate a virtual environment, or pip install globally, depending on your preference. 
 
 ```
-$ pip install -r requirement.txt
+$ pip install -r requirements.txt
 $ cd Meal_Planner
 $ py manage.py migrate
 $ py manage.py runserver
